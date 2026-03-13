@@ -44,7 +44,7 @@ class Enemy {
              }
         }
 
-        static void ManageEnemies(HitBox target) {
+        static void ManageEnemies(HitBox target, int& score) {
             for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
                 p.first.first += (p.first.first == 0) ? 0 : direction;
                 if (p.second) {
@@ -61,10 +61,12 @@ class Enemy {
                         Animation::animations.push_back(
                             Animation(p.second->position.first, p.second->position.second, 155, 0, 33, 33, 30, 30, 4, ImageManager::SpriteSheet)
                         );
+                        score = score + 50;
                         p.second = nullptr;
                     }
                 }
             }
+        
             
             for (int i = 0; i < Enemy::enemies.size(); i++) {
                 if ((Enemy::enemies[i].second && Enemy::enemies[i].second->position.first <= -30) || 
