@@ -54,6 +54,11 @@ void Program::Update() {
                 lives--;
             }
         }
+        while (gameOver = false){
+            if (health <= 0){
+                score = score +50;
+            }
+        }
 
         for (Projectile& p : Projectile::projectiles) { 
             p.update(); 
@@ -63,12 +68,6 @@ void Program::Update() {
         if (lives <= 0 && pauseFrames <= 0) gameOver = true;
         Projectile::CleanProjectiles();
         Projectile::ProjectileCollision();
-    }
-}
-
-void Program::Score() {
-    if (health <=0){
-        score = score +50;
     }
 }
 
@@ -90,7 +89,7 @@ void Program::Draw() {
     if (startup) DrawStartup();
     if (paused) DrawPauseScreen();
     if (gameOver) DrawGameOver();
-    if (!startup && !gameOver && !paused) DrawScore();
+    if (!startup && !gameOver && !paused && pauseFrames >= 0) DrawScore();
 }
 
 void Program::ManageEnemyRespawns() {
@@ -157,6 +156,7 @@ void Program::DrawGameOver() {
 void Program::DrawScore(){
     DrawRectangle(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight(), Color{0, 0, 0, 125});
     DrawText("SCORE: ", (GetScreenWidth() / 2) - 380, 50, 144, WHITE);
+    DrawText(score, (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
 
 void Program::KeyInputs() {
@@ -165,7 +165,6 @@ void Program::KeyInputs() {
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
     if (IsKeyPressed('K')) score = score + 500;
-    
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
         Reset();
