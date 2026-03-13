@@ -66,6 +66,12 @@ void Program::Update() {
     }
 }
 
+void Program::Score() {
+    if (health <=0){
+        score = score +50;
+    }
+}
+
 void Program::Draw() {
     background.Draw();
     if (pauseFrames <= 0 && !gameOver) player->draw();
@@ -84,6 +90,7 @@ void Program::Draw() {
     if (startup) DrawStartup();
     if (paused) DrawPauseScreen();
     if (gameOver) DrawGameOver();
+    if (!startup && !gameOver && !paused) DrawScore();
 }
 
 void Program::ManageEnemyRespawns() {
@@ -147,11 +154,17 @@ void Program::DrawGameOver() {
     DrawText("Press Enter", (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
 
+void Program::DrawScore(){
+    DrawRectangle(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight(), Color{0, 0, 0, 125});
+    DrawText("SCORE: ", (GetScreenWidth() / 2) - 380, 50, 144, WHITE);
+}
+
 void Program::KeyInputs() {
     if ((!gameOver && !startup && IsKeyPressed('P')) || (paused && IsKeyPressed(KEY_ENTER))) paused = !paused;
     if (!paused && !startup && IsKeyPressed('O')) gameOver = !gameOver;
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
+    if (IsKeyPressed('K')) score = score + 500;
     
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
