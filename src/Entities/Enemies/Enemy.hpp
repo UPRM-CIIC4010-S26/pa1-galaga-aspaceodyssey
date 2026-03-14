@@ -57,7 +57,10 @@ class Enemy {
                         if (p2.ID != 1 && HitBox::Collision(p.second->hitBox, p2.getHitBox())) {
                             p.second->health--;
                             p2.del = true;
+                            if (p.second->health > 0) {
+                            PlaySound(SoundManager::hit);
                         }
+                    }
                     }
 
                     if (p.second->health <= 0) {
@@ -65,6 +68,7 @@ class Enemy {
                             Animation(p.second->position.first, p.second->position.second, 155, 0, 33, 33, 30, 30, 4, ImageManager::SpriteSheet)
                         );
                         score = score + p.second->getDied();
+                        PlaySound(SoundManager::dead);
                         p.second = nullptr;
                     }
                 }
