@@ -13,6 +13,7 @@ class Enemy {
         bool spawning = false;
         bool frame = false;
         int frameCooldown = 30;
+        int died = 0;
         
     public:
         int health = 1;
@@ -24,6 +25,8 @@ class Enemy {
         inline static std::vector<std::pair<std::pair<float, float>, Enemy*>> enemies;
 
         Enemy() {}
+
+        int getDied(){ return died; }
 
         Enemy(float x, float y) {
             position.first = x;
@@ -61,10 +64,7 @@ class Enemy {
                         Animation::animations.push_back(
                             Animation(p.second->position.first, p.second->position.second, 155, 0, 33, 33, 30, 30, 4, ImageManager::SpriteSheet)
                         );
-                        if (SpEnemy health <= 0) score = score + 100;
-                        else if (StdEnemy health <= 0) score = score + 70;
-                        else if (StEnemy health <= 0) score = score + 150;
-                        else score = score + 50;
+                        score = score + p.second->getDied();
                         p.second = nullptr;
                     }
                 }
