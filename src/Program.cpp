@@ -209,13 +209,5 @@ void Program::Reset() {
     count = 0;
     delay = 0;
     lives = 3;
-    for (int i = 0; i < 30; i++) {
-        float x = 250 + 50 * (i%10);
-        float y = 200 + 50 * (i/50);
-
-        Enemy::enemies.push_back(std::pair<std::pair<float, float>, Enemy*> {
-            std::pair<float, float>{x, y}, 
-            new StdEnemy(x, y)
-        });
-    }
+    Program();
 }
