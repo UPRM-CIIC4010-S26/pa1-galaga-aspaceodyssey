@@ -12,7 +12,7 @@ Don't forget that you must also fill out an evaluation form in Moodle to conside
 ## Grading
 
 841-23-1681 Keallan K. Rodriguez Rivera keallan.rodriguez@upr.edu
-(STUDENT NUMBER HERE) (STUDENT NAME HERE) (STUDENT EMAIL HERE)
+802-24-9316 Angel L. Perez Baez angel.perez109@upr.edu
 
 Any project that doesn't compile will receive a 0.
 
@@ -22,3 +22,7 @@ If a partner has no commits in the repositories, they will receive a 0.
 
 ## Student Notes
 If you have any bonus specs, bonus or any details the TA's should know, you should include it here:
+
+PLEASE USE LLVM AND CLANGD FOR THE FUTURE OMG.
+CPPDBG IS SUCH A PAINNNN RAHHHH. I BEGGGG. CHANGE IT AND MY LIFE IS YOURSSSSSS. CLANGD LOOKS ACTUALLY GOOD, C/C++ EXTENSIONS IS SO PAINFUL TO USE 
+(i'm joking i swear, but i really would suggest it.)
