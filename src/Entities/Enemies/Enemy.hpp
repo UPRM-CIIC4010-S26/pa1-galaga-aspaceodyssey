@@ -61,7 +61,10 @@ class Enemy {
                         Animation::animations.push_back(
                             Animation(p.second->position.first, p.second->position.second, 155, 0, 33, 33, 30, 30, 4, ImageManager::SpriteSheet)
                         );
-                        score = score + 50;
+                        if (SpEnemy health <= 0) score = score + 100;
+                        else if (StdEnemy health <= 0) score = score + 70;
+                        else if (StEnemy health <= 0) score = score + 150;
+                        else score = score + 50;
                         p.second = nullptr;
                     }
                 }
