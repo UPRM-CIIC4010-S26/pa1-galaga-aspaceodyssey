@@ -18,7 +18,9 @@ class Program {
         int count = 0;
         int delay = 0;
         int lives = 3;
+        int extraLife = 1000;
         int pauseFrames = 0;
+        int score = 0;
 
         bool startup = true;
         bool paused = false;
@@ -33,9 +35,11 @@ class Program {
         void DrawStartup();
         void DrawPauseScreen();
         void DrawGameOver();
+        void DrawScore();
         void KeyInputs();
         void PlayerReset();
         void Reset();
+        void LessCD();
           
         ~Program() {}
 };

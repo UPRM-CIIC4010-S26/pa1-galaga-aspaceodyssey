@@ -35,7 +35,7 @@ void Program::Update() {
     pauseFrames = std::max(pauseFrames - 1, 0);
 
     if (!startup && !paused && !gameOver && pauseFrames <= 0) {
-        Enemy::ManageEnemies(player->hitBox);
+        Enemy::ManageEnemies(player->hitBox, score);
         StdEnemy::attackReset();
         ManageEnemyRespawns();
         player->update();
@@ -54,13 +54,12 @@ void Program::Update() {
                 lives--;
             }
         }
-
         for (Projectile& p : Projectile::projectiles) { 
             p.update(); 
 
         }
 
-        if (lives <= 0 && pauseFrames <= 0) gameOver = true;
+        if (lives <= 0 && pauseFrames <= 0) gameOver = true, score = 0;
         Projectile::CleanProjectiles();
         Projectile::ProjectileCollision();
     }
@@ -72,10 +71,17 @@ void Program::Draw() {
     for (Animation& a : Animation::animations) a.draw();
 
     for (int i = 0; i < lives; i++) {
-         DrawTexturePro(ImageManager::SpriteSheet, Rectangle{0, 0, 17, 18}, 
-                   Rectangle{10.0f + i * 30, GetScreenHeight() - 30.0f, 20, 20}, 
-                   Vector2{0, 0}, 0, WHITE);
+        DrawTexturePro(ImageManager::SpriteSheet, Rectangle{0, 0, 17, 18},
+            Rectangle{10.0f + i * 30, GetScreenHeight() - 30.0f, 20, 20}, 
+            Vector2{0, 0}, 0, WHITE);
+            if (score >= extraLife){
+        extraLife = extraLife + 1000;
+        lives++;
     }
+    if (lives > 5){
+        lives = 5;
+    }
+}
 
 
     for (Projectile p : Projectile::projectiles) p.draw();
@@ -84,6 +90,7 @@ void Program::Draw() {
     if (startup) DrawStartup();
     if (paused) DrawPauseScreen();
     if (gameOver) DrawGameOver();
+    if (!startup && !gameOver && !paused && pauseFrames >= 0) DrawScore();
 }
 
 void Program::ManageEnemyRespawns() {
@@ -147,12 +154,18 @@ void Program::DrawGameOver() {
     DrawText("Press Enter", (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
 
+void Program::DrawScore(){
+    DrawRectangle(0, 0, (float)GetScreenWidth(), (float)GetScreenHeight(), Color{0, 0, 0, 125});
+    std::string sc = "SCORE: " + std::to_string(score);
+    DrawText(sc.c_str(), (GetScreenWidth() / 9) - 75, GetScreenHeight() / 11, 24, GRAY);
+}
+
 void Program::KeyInputs() {
     if ((!gameOver && !startup && IsKeyPressed('P')) || (paused && IsKeyPressed(KEY_ENTER))) paused = !paused;
     if (!paused && !startup && IsKeyPressed('O')) gameOver = !gameOver;
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
-    
+    if (IsKeyPressed('K')) score = score + 500;
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
         Reset();
@@ -176,6 +189,12 @@ void Program::PlayerReset() {
     player->position.first = GetScreenWidth() / 2 - 15;
     pauseFrames = 120;
     lives--;
+}
+
+void Program::LessCD(){
+    if (score >= extraLife){
+        respawnCooldown = respawnCooldown - 30;
+    }
 }
 
 void Program::Reset() {
