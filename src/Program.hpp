@@ -39,6 +39,7 @@ class Program {
         void KeyInputs();
         void PlayerReset();
         void Reset();
+        void LessCD();
           
         ~Program() {}
 };

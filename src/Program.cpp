@@ -191,6 +191,12 @@ void Program::PlayerReset() {
     lives--;
 }
 
+void Program::LessCD(){
+    if (score >= extraLife){
+        respawnCooldown = respawnCooldown - 30;
+    }
+}
+
 void Program::Reset() {
     Enemy::enemies.clear();
     StdEnemy::attackInProgress = false;
