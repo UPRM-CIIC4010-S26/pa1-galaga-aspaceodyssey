@@ -59,8 +59,7 @@ void Program::Update() {
 
         }
 
-        if (lives <= 0 && pauseFrames <= 0) gameOver = true;
-        if (gameOver == true) score = 0;
+        if (lives <= 0 && pauseFrames <= 0) gameOver = true, score = 0;
         Projectile::CleanProjectiles();
         Projectile::ProjectileCollision();
     }
@@ -72,10 +71,17 @@ void Program::Draw() {
     for (Animation& a : Animation::animations) a.draw();
 
     for (int i = 0; i < lives; i++) {
-         DrawTexturePro(ImageManager::SpriteSheet, Rectangle{0, 0, 17, 18}, 
-                   Rectangle{10.0f + i * 30, GetScreenHeight() - 30.0f, 20, 20}, 
-                   Vector2{0, 0}, 0, WHITE);
+        DrawTexturePro(ImageManager::SpriteSheet, Rectangle{0, 0, 17, 18},
+            Rectangle{10.0f + i * 30, GetScreenHeight() - 30.0f, 20, 20}, 
+            Vector2{0, 0}, 0, WHITE);
+            if (score >= extraLife){
+        extraLife = extraLife + 1000;
+        lives++;
     }
+    if (lives > 5){
+        lives = 5;
+    }
+}
 
 
     for (Projectile p : Projectile::projectiles) p.draw();

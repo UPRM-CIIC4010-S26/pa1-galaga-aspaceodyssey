@@ -18,6 +18,7 @@ class Program {
         int count = 0;
         int delay = 0;
         int lives = 3;
+        int extraLife = 1000;
         int pauseFrames = 0;
         int score = 0;
 
